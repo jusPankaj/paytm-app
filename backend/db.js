@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+mongoose.connect("mongodb://localhost:27017/paytmApp");
+
 const UserSchema = new mongoose.Schema({
     username:{
         type: String,
@@ -30,8 +32,23 @@ const UserSchema = new mongoose.Schema({
     }
 })
 
+const AccountSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        require: true
+    }, 
+    balance: {
+        type: Number,
+        require: true
+    }
+}) 
+
+
+const Account = mongoose.model('Accounts', AccountSchema);
 const User = mongoose.model('User', UserSchema);
 
 module.exports = {
-    User
+    User,
+    Account
 }
